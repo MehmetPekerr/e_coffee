@@ -1,0 +1,14 @@
+# OS files
+Thumbs.db
+.DS_Store
+
+# Editor settings
+.vscode/
+
+# NetBeans and build outputs
+**/build/
+**/dist/
+**/nbproject/private/
+
+# Deployment artifacts
+**/*.war

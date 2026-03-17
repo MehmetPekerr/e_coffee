@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                 template="/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col">
+                <h:form>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                user_id
+                            </tr>
+                            <tr>
+                                username
+                            </tr>
+                            <tr>
+                                password
+                            </tr>
+                            <tr>
+                                role_id n 
+                            </tr>
+                            <tr>
+                                address_id n
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{userBean.list}" var="e">
+                                <tr>
+                                    <td>  #{e.user_id} </td>
+                                    <td> 
+                                        <h:commandLink action="#{userBean.setEntity(e)}" value="#{e.username}"/>
+                                    </td>
+                                    <td>  #{e.password} </td>
+                                    <td>  #{e.role_id.role_name} </td>
+                                    <td>  #{e.address_id.address_line1} </td>
+
+
+                                </tr>
+                            </ui:repeat>
+
+
+                        </tbody>
+                    </table>
+                </h:form>
+            </div>
+
+        </div>
+
+        <div class="col">
+
+            <h:form>
+                <div class="mb-3">
+                    <label>username</label>
+                    <h:outputLabel for="username" value="username" />
+                    <h:inputText id="username" value="#{userBean.entity.username}" styleClass="form-control"/>
+                    <br></br>
+                     <label>password</label>
+                    <h:outputLabel for="password" value="password" />
+                    <h:inputText id="password" value="#{userBean.entity.password}" styleClass="form-control"/>
+                    <br></br>
+                    <br></br>
+                    <label>user_id</label>
+                    <h:selectOneMenu value="#{userBean.entity.role_id}" converter="rolesConverter">
+                        <f:selectItems value="#{rolesBean.list}" var="g" itemLabel="#{g.role_name}" itemValue="#{g}">      
+                        </f:selectItems>
+                    </h:selectOneMenu>
+                    <br></br>
+                    <br></br>
+                    <label>address_line1</label>
+                    <h:selectOneMenu value="#{userBean.entity.address_id}" converter="addressesConverter">
+                        <f:selectItems value="#{addressesBean.list}" var="a" itemLabel="#{a.address_line1}" itemValue="#{a}">      
+                        </f:selectItems>
+                    </h:selectOneMenu>
+
+
+
+                </div>
+                <div class="mb-3">
+
+                    <h:commandButton styleClass="btn btn-danger" rendered="#{userBean.entity.user_id==null}" action="#{userBean.create()}" value="Create"/>
+                    <h:commandButton styleClass="btn btn-success" rendered="#{userBean.entity.user_id !=null}" action="#{userBean.clearForm}" value="Clear Form"/>
+                    <h:commandButton styleClass="btn btn-danger" rendered="#{userBean.entity.user_id !=null}" action="#{userBean.update()}" value="Update"/>
+                    <h:commandButton styleClass="btn btn-success" rendered="#{userBean.entity.user_id!=null}" action="#{userBean.delete()}" value="Delete"/>
+                </div>
+            </h:form>
+        </div>
+    </ui:define>
+
+
+</ui:composition>
